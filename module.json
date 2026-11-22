@@ -2,7 +2,7 @@
   "id": "sr6-catalog",
   "title": "Shadowrun Catalog",
   "description": "Shared item catalog picker for Shadowrun 6 on Eden. Filter shadowrun-data packs by type, price, availability, and actor context; return a pick to another module or post it to chat. Requires shadowrun-data.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "compatibility": {
     "minimum": "13",
     "verified": "14.370",

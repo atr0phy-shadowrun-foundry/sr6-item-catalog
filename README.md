@@ -1,6 +1,6 @@
 # Shadowrun Catalog
 
-Foundry module `sr6-catalog` version 0.1.0.
+Foundry module `sr6-catalog` version 0.1.1.
 
 Shared item catalog picker over `shadowrun-data`. Filter by pack, name, price, availability, and actor context (owned, ammo for owned weapons, Essence fit, melee/firearms). Submit either posts a chat card or returns the pick to a calling wizard.
 
