@@ -38,7 +38,7 @@ export class CatalogApp extends HandlebarsApplicationMixin(ApplicationV2) {
         this.DEFAULT_OPTIONS.actions = {
             apply: this.#onApply,
             pick: this.#onPick,
-            submit: this.#onSubmitPick,
+            confirm: this.#onConfirmPick,
             cancel: this.#onCancel,
             pack: this.#onOpenPack,
             preset: this.#onPreset,
@@ -47,9 +47,10 @@ export class CatalogApp extends HandlebarsApplicationMixin(ApplicationV2) {
 
     static #app = null;
 
-    /** Manual open — Submit posts to chat. */
+    /** Manual open — Submit posts to chat. Cancels any in-flight pick(). */
     static open(options = {}) {
         const app = this.#ensure();
+        app.#cancelPending();
         app.#configure({ ...options, mode: "chat" });
         app.render({ force: true });
         return app;
@@ -61,10 +62,7 @@ export class CatalogApp extends HandlebarsApplicationMixin(ApplicationV2) {
      */
     static pick(options = {}) {
         const app = this.#ensure();
-        if (app.#pendingResolve) {
-            app.#pendingResolve(null);
-            app.#pendingResolve = null;
-        }
+        app.#cancelPending();
         return new Promise((resolve) => {
             app.#pendingResolve = resolve;
             app.#configure({ ...options, mode: "return" });
@@ -167,11 +165,15 @@ export class CatalogApp extends HandlebarsApplicationMixin(ApplicationV2) {
     }
 
     async close(options = {}) {
-        if (this.#pendingResolve) {
-            this.#pendingResolve(null);
-            this.#pendingResolve = null;
-        }
+        // Only null-resolve a waiting pick when the window was dismissed, not after confirm.
+        if (!options?.accepted) this.#cancelPending();
         return super.close(options);
+    }
+
+    #cancelPending() {
+        if (!this.#pendingResolve) return;
+        this.#pendingResolve(null);
+        this.#pendingResolve = null;
     }
 
     static async #onSubmit(event, form) {
@@ -211,7 +213,12 @@ export class CatalogApp extends HandlebarsApplicationMixin(ApplicationV2) {
         return this.render();
     }
 
-    static async #onSubmitPick(event) {
+    /**
+     * Confirm the selected row. If a pick() caller is waiting, always resolve that
+     * Promise with the payload (even if mode was stomped to chat mid-flight).
+     * Otherwise post a chat card.
+     */
+    static async #onConfirmPick(event) {
         event.preventDefault();
         const hit = this.catalog.selected;
         if (!hit) {
@@ -229,24 +236,21 @@ export class CatalogApp extends HandlebarsApplicationMixin(ApplicationV2) {
             avail: hit.avail,
             index: { ...hit },
         };
-        if (this.catalog.mode === "return") {
-            const resolve = this.#pendingResolve;
-            this.#pendingResolve = null;
-            resolve?.(payload);
-            return this.close();
+        const resolve = this.#pendingResolve;
+        this.#pendingResolve = null;
+        if (resolve) {
+            resolve(payload);
+            return this.close({ accepted: true });
         }
         await postChatPick(payload, this.actor);
         ui.notifications.info(`${payload.name} posted to chat.`);
-        return this.close();
+        return this.close({ accepted: true });
     }
 
     static async #onCancel(event) {
         event.preventDefault();
-        if (this.#pendingResolve) {
-            this.#pendingResolve(null);
-            this.#pendingResolve = null;
-        }
-        return this.close();
+        this.#cancelPending();
+        return this.close({ accepted: true });
     }
 
     static async #onOpenPack(event) {
