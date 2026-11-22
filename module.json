@@ -1,0 +1,45 @@
+{
+  "id": "sr6-catalog",
+  "title": "Shadowrun Catalog",
+  "description": "Shared item catalog picker for Shadowrun 6 on Eden. Filter shadowrun-data packs by type, price, availability, and actor context; return a pick to another module or post it to chat. Requires shadowrun-data.",
+  "version": "0.1.0",
+  "compatibility": {
+    "minimum": "13",
+    "verified": "14.370",
+    "maximum": "14"
+  },
+  "esmodules": ["scripts/module.js"],
+  "styles": ["styles/catalog.css"],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json"
+    }
+  ],
+  "relationships": {
+    "systems": [
+      {
+        "id": "shadowrun6-eden",
+        "type": "system",
+        "compatibility": {
+          "minimum": "4.0.11",
+          "verified": "4.0.11"
+        }
+      }
+    ],
+    "requires": [
+      {
+        "id": "shadowrun-data",
+        "type": "module",
+        "compatibility": {
+          "minimum": "1.0.5",
+          "verified": "1.0.6"
+        }
+      }
+    ]
+  },
+  "url": "https://github.com/atr0phy-shadowrun-foundry/sr6-item-catalog",
+  "manifest": "https://raw.githubusercontent.com/atr0phy-shadowrun-foundry/sr6-item-catalog/main/module.json",
+  "download": "https://github.com/atr0phy-shadowrun-foundry/sr6-item-catalog/archive/refs/heads/main.zip"
+}

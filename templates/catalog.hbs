@@ -1,0 +1,92 @@
+<div class="sr6cat">
+    <header class="sr6cat-bar">
+        <p class="sr6cat-kicker">{{#if isReturn}}Return a pick{{else}}Browse and post{{/if}}</p>
+        {{#if hasActor}}<p class="sr6cat-actor">Actor context: {{actorName}}</p>{{/if}}
+        {{#if missing}}<p class="sr6cat-notice">Some packs are missing — enable shadowrun-data.</p>{{/if}}
+    </header>
+
+    <div class="sr6cat-filters">
+        <label class="sr6cat-field grow">
+            <span>Name</span>
+            <input type="search" name="query" value="{{filter.query}}" placeholder="Contains…">
+        </label>
+        <label class="sr6cat-field">
+            <span>Min ¥</span>
+            <input type="number" name="priceMin" value="{{filter.priceMin}}" step="1" min="0">
+        </label>
+        <label class="sr6cat-field">
+            <span>Max ¥</span>
+            <input type="number" name="priceMax" value="{{filter.priceMax}}" step="1" min="0">
+        </label>
+        <label class="sr6cat-field">
+            <span>Preset</span>
+            <select name="preset">
+                {{#each presetChoices}}
+                <option value="{{id}}" {{#if selected}}selected{{/if}}>{{label}}</option>
+                {{/each}}
+            </select>
+        </label>
+        <label class="sr6cat-field">
+            <span>Weapon kind</span>
+            <select name="weaponKind">
+                {{#each weaponKindChoices}}
+                <option value="{{id}}" {{#if selected}}selected{{/if}}>{{label}}</option>
+                {{/each}}
+            </select>
+        </label>
+        <button type="button" data-action="apply">Apply filters</button>
+        <button type="button" data-action="preset">Apply preset</button>
+    </div>
+
+    <div class="sr6cat-toggles">
+        <label><input type="checkbox" name="readyOnly" {{#if filter.readyOnly}}checked{{/if}}> Readily available only</label>
+        <label><input type="checkbox" name="hideOwned" {{#if filter.hideOwned}}checked{{/if}} {{#unless hasActor}}disabled{{/unless}}> Hide owned</label>
+        <label><input type="checkbox" name="ammoForOwned" {{#if filter.ammoForOwned}}checked{{/if}} {{#unless hasActor}}disabled{{/unless}}> Ammo for owned weapons</label>
+        <label><input type="checkbox" name="fitsEssence" {{#if filter.fitsEssence}}checked{{/if}} {{#unless hasActor}}disabled{{/unless}}> Fits remaining Essence</label>
+    </div>
+
+    <details class="sr6cat-packs" open>
+        <summary>Packs</summary>
+        <div class="sr6cat-pack-grid">
+            {{#each allPacks}}
+            <label><input type="checkbox" name="pack" value="{{key}}" {{#if checked}}checked{{/if}}> {{label}}</label>
+            {{/each}}
+        </div>
+    </details>
+
+    <p class="sr6cat-count">
+        {{total}} match{{#if plural}}es{{/if}}{{#if truncated}} · showing first {{resultCount}}; narrow filters for more{{/if}}
+    </p>
+
+    <div class="sr6cat-results">
+        {{#each results}}
+        <button type="button"
+            class="sr6cat-row {{#if selected}}selected{{/if}}"
+            data-action="pick"
+            data-pack="{{pack}}"
+            data-document-id="{{id}}"
+            data-uuid="{{uuid}}"
+            data-price="{{price}}"
+            data-karma="{{karma}}"
+            data-essence="{{essence}}"
+            data-avail="{{avail}}"
+            data-label="{{name}}">
+            <span class="sr6cat-row-name">{{name}}</span>
+            <span class="sr6cat-row-hint">{{packLabel}} · {{hint}}</span>
+        </button>
+        {{else}}
+        <p class="sr6cat-empty">No matches. Widen packs or clear filters.</p>
+        {{/each}}
+    </div>
+
+    <footer class="sr6cat-foot">
+        {{#if selected}}
+        <span class="sr6cat-selected">Selected: {{selected.name}}</span>
+        {{else}}
+        <span class="sr6cat-selected">Nothing selected</span>
+        {{/if}}
+        <button type="button" data-action="pack">Open pack</button>
+        <button type="button" data-action="cancel">Cancel</button>
+        <button type="button" class="sr6cat-submit" data-action="submit" {{#unless selected}}disabled{{/unless}}>{{submitLabel}}</button>
+    </footer>
+</div>

@@ -1,0 +1,204 @@
+.sr6-catalog {
+    --sr6cat-rule: #7f9cb8;
+    --sr6cat-ok: #6a9a72;
+    --sr6cat-gap: #c4963a;
+}
+
+.sr6-catalog .window-content,
+.sr6-catalog .window-content > form {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    min-height: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.sr6-catalog .sr6cat {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.sr6-catalog .sr6cat-bar,
+.sr6-catalog .sr6cat-foot {
+    flex: 0 0 auto;
+    padding: 0.5rem 0.75rem;
+    background: rgba(0, 0, 0, 0.28);
+}
+
+.sr6-catalog .sr6cat-bar {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sr6-catalog .sr6cat-kicker,
+.sr6-catalog .sr6cat-actor,
+.sr6-catalog .sr6cat-count {
+    margin: 0;
+    color: var(--color-text-secondary, #c9c3b6);
+    font-size: 0.85rem;
+}
+
+.sr6-catalog .sr6cat-kicker {
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.sr6-catalog .sr6cat-notice {
+    margin: 0.35rem 0 0;
+    color: var(--sr6cat-gap);
+}
+
+.sr6-catalog .sr6cat-filters,
+.sr6-catalog .sr6cat-toggles,
+.sr6-catalog .sr6cat-packs {
+    flex: 0 0 auto;
+    padding: 0.55rem 0.75rem 0;
+}
+
+.sr6-catalog .sr6cat-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem 0.55rem;
+    align-items: end;
+}
+
+.sr6-catalog .sr6cat-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    margin: 0;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--color-text-secondary, #c9c3b6);
+}
+
+.sr6-catalog .sr6cat-field.grow {
+    flex: 1 1 12rem;
+}
+
+.sr6-catalog .sr6cat-field input,
+.sr6-catalog .sr6cat-field select {
+    text-transform: none;
+    letter-spacing: normal;
+    font-size: 0.9rem;
+    min-height: 1.9rem;
+}
+
+.sr6-catalog .sr6cat-toggles {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem 0.9rem;
+    font-size: 0.88rem;
+}
+
+.sr6-catalog .sr6cat-toggles label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    margin: 0;
+}
+
+.sr6-catalog .sr6cat-packs {
+    margin: 0.35rem 0 0;
+}
+
+.sr6-catalog .sr6cat-pack-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(9.5rem, 1fr));
+    gap: 0.25rem 0.55rem;
+    margin-top: 0.35rem;
+    font-size: 0.88rem;
+}
+
+.sr6-catalog .sr6cat-count {
+    padding: 0.35rem 0.75rem 0.15rem;
+}
+
+.sr6-catalog .sr6cat-results {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow: auto;
+    padding: 0.35rem 0.75rem 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.sr6-catalog .sr6cat-row {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.1rem;
+    width: 100%;
+    margin: 0;
+    padding: 0.4rem 0.55rem;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.03);
+    color: inherit;
+    font: inherit;
+    text-align: left;
+}
+
+.sr6-catalog .sr6cat-row:hover {
+    border-color: var(--sr6cat-rule);
+}
+
+.sr6-catalog .sr6cat-row.selected {
+    border-color: var(--sr6cat-ok);
+    background: rgba(106, 154, 114, 0.15);
+}
+
+.sr6-catalog .sr6cat-row-name {
+    font-weight: 600;
+}
+
+.sr6-catalog .sr6cat-row-hint {
+    color: var(--color-text-secondary, #c9c3b6);
+    font-size: 0.82rem;
+}
+
+.sr6-catalog .sr6cat-empty {
+    margin: 0.5rem 0;
+    color: var(--color-text-secondary, #c9c3b6);
+}
+
+.sr6-catalog .sr6cat-foot {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sr6-catalog .sr6cat-selected {
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 0.9rem;
+}
+
+.sr6-catalog .sr6cat-submit {
+    background: rgba(106, 154, 114, 0.35);
+}
+
+.sr6cat-chat {
+    margin: 0.15rem 0;
+    padding: 0.45rem 0.55rem;
+    border-left: 3px solid #7f9cb8;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+#scene-controls-tools button.tool[data-tool="sr6Catalog"] {
+    color: #9bb7d4;
+}
+
+#scene-controls-tools button.tool[data-tool="sr6Catalog"]:hover,
+#scene-controls-tools button.tool[data-tool="sr6Catalog"].active {
+    color: #c5d7ea;
+}
